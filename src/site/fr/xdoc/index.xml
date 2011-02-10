@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title>Lutèce : plugin html</title>
+	</properties>
+	<body>
+		<section name="Plugin html">
+			<p>
+			Le plugin-html permet d'ajouter du contenu riche (html) dans un portail Lutece.
+			</p>
+			<p>
+			Pour ajouter du contenu, suivre les étapes suivantes :
+			<ol>
+                <li>activez et donnez vous les droits pour plugin-html depuis le backoffice de Lutece.</li>
+                <li>dans l'administration du site, allez dans l'onglet "ajouter une rubrique" et ajouter une rubrique de type "Html ou texte libre"</li>
+                <li>donnez un titre, une position dans la page et un contenu à votre portlet html.</li>
+            </ol>
+			</p>
+		</section>
+	</body>
+</document>  
