@@ -4,7 +4,7 @@
 INSERT INTO core_portlet (id_portlet, id_portlet_type, id_page, name, date_update, status, portlet_order, column_no, id_style, accept_alias, date_creation, display_portlet_title)
 	VALUES (57,'HTML_PORTLET',5,'Le projet','2007-11-24 17:18:33',0,2,1,104,0,'2007-03-14 16:17:30',1);
 INSERT INTO core_portlet (id_portlet, id_portlet_type, id_page, name, date_update, status, portlet_order, column_no, id_style, accept_alias, date_creation, display_portlet_title)
-	VALUES (55,'HTML_PORTLET',1,'Lutèce v2.3','2007-11-24 16:24:51',0,1,2,104,0,'2007-03-14 16:13:39',0);
+	VALUES (55,'HTML_PORTLET',1,'Lutèce v2.4','2007-11-24 16:24:51',0,1,2,104,0,'2007-03-14 16:13:39',0);
 INSERT INTO core_portlet (id_portlet, id_portlet_type, id_page, name, date_update, status, portlet_order, column_no, id_style, accept_alias, date_creation, display_portlet_title)
 	VALUES (61,'HTML_PORTLET',9,'Publication d''agendas','2007-11-24 17:24:11',0,1,1,104,0,'2007-03-14 16:35:35',0);
 INSERT INTO core_portlet (id_portlet, id_portlet_type, id_page, name, date_update, status, portlet_order, column_no, id_style, accept_alias, date_creation, display_portlet_title)
