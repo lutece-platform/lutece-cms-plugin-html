@@ -2,19 +2,19 @@
 -- Dumping data for table core_portlet
 --
 INSERT INTO core_portlet (id_portlet, id_portlet_type, id_page, name, date_update, status, portlet_order, column_no, id_style, accept_alias, date_creation, display_portlet_title)
-	VALUES (57,'HTML_PORTLET',5,'Le projet','2007-11-24 17:18:33',0,2,1,104,0,'2007-03-14 16:17:30',1);
+	VALUES (57,'HTML_PORTLET',5,'Le projet','2011-11-24 17:18:33',0,2,1,104,0,'2011-03-14 16:17:30',1);
 INSERT INTO core_portlet (id_portlet, id_portlet_type, id_page, name, date_update, status, portlet_order, column_no, id_style, accept_alias, date_creation, display_portlet_title)
-	VALUES (55,'HTML_PORTLET',1,'Lutèce v2.4','2007-11-24 16:24:51',0,1,2,104,0,'2007-03-14 16:13:39',0);
+	VALUES (55,'HTML_PORTLET',1,'Lutèce v3.0','2011-11-24 16:24:51',0,1,2,104,0,'2011-03-14 16:13:39',0);
 INSERT INTO core_portlet (id_portlet, id_portlet_type, id_page, name, date_update, status, portlet_order, column_no, id_style, accept_alias, date_creation, display_portlet_title)
-	VALUES (61,'HTML_PORTLET',9,'Publication d''agendas','2007-11-24 17:24:11',0,1,1,104,0,'2007-03-14 16:35:35',0);
+	VALUES (61,'HTML_PORTLET',9,'Publication d''agendas','2011-11-24 17:24:11',0,1,1,104,0,'2011-03-14 16:35:35',0);
 INSERT INTO core_portlet (id_portlet, id_portlet_type, id_page, name, date_update, status, portlet_order, column_no, id_style, accept_alias, date_creation, display_portlet_title)
-	VALUES (64,'HTML_PORTLET',10,'Infos développeurs','2007-11-24 17:26:41',0,1,1,104,0,'2007-03-14 16:45:14',0);
+	VALUES (64,'HTML_PORTLET',10,'Infos développeurs','2011-11-24 17:26:41',0,1,1,104,0,'2011-03-14 16:45:14',0);
 INSERT INTO core_portlet (id_portlet, id_portlet_type, id_page, name, date_update, status, portlet_order, column_no, id_style, accept_alias, date_creation, display_portlet_title)
-	VALUES (65,'HTML_PORTLET',10,'Liens développeurs','2007-11-24 17:26:05',0,1,2,104,0,'2007-03-14 16:49:18',0);
+	VALUES (65,'HTML_PORTLET',10,'Liens développeurs','2011-11-24 17:26:05',0,1,2,104,0,'2011-03-14 16:49:18',0);
 INSERT INTO core_portlet (id_portlet, id_portlet_type, id_page, name, date_update, status, portlet_order, column_no, id_style, accept_alias, date_creation, display_portlet_title)
-	VALUES (58,'HTML_PORTLET',3,'Accès à la documentation technique','2007-11-24 17:19:26',0,2,1,104,0,'2007-03-14 16:20:08',1);
+	VALUES (58,'HTML_PORTLET',3,'Accès à la documentation technique','2011-11-24 17:19:26',0,2,1,104,0,'2011-03-14 16:20:08',1);
 INSERT INTO core_portlet (id_portlet, id_portlet_type, id_page, name, date_update, status, portlet_order, column_no, id_style, accept_alias, date_creation, display_portlet_title)
-	VALUES (66,'HTML_PORTLET',10,'Tests unitaires','2007-11-24 17:26:24',0,2,3,104,0,'2007-03-14 17:10:26',0);
+	VALUES (66,'HTML_PORTLET',10,'Tests unitaires','2011-11-24 17:26:24',0,2,3,104,0,'2011-03-14 17:10:26',0);
 INSERT INTO core_portlet (id_portlet, id_portlet_type, id_page, name, date_update, status, portlet_order, column_no, id_style, accept_alias, date_creation, display_portlet_title)
 	VALUES (90,'HTML_PORTLET',5,'Liste des plugins','2009-05-13 19:41:18',0,1,2,104,0,'2009-05-13 19:40:13',0);
 INSERT INTO core_portlet (id_portlet, id_portlet_type, id_page, name, date_update, status, portlet_order, column_no, id_style, accept_alias, date_creation, display_portlet_title)
