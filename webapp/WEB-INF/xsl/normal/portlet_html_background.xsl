@@ -7,9 +7,9 @@
 	<div class="portlet-background append-bottom">
 		<xsl:choose>
 			<xsl:when test="not(string(display-portlet-title)='1')">
-				<div class="portlet-background-header -lutece-border-radius-top">
+				<h1 class="portlet-background-header -lutece-border-radius-top">
 					<xsl:value-of disable-output-escaping="yes" select="portlet-name" />
-				</div>
+				</h1>
 				<div class="portlet-background-content -lutece-border-radius-bottom">
 					<xsl:apply-templates select="html-portlet" />
 				</div>
