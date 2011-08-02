@@ -7,9 +7,9 @@
 	<div class="portlet-background-colored">
 		<xsl:if test="not(string(display-portlet-title)='1')">
 			<div class="portlet-background-colored-header">
-			<h3 class="portlet-background-colored-header">
+			<h1 class="portlet-background-colored-header">
 				<xsl:value-of disable-output-escaping="yes" select="portlet-name" />
-			</h3>
+			</h1>
 			</div>
         </xsl:if>
 

@@ -8,9 +8,9 @@
 
     <div class="portlet-bordered">
     <xsl:if test="not(string(display-portlet-title)='1')">
-		<h3 class="portlet-bordered-header">
+		<h1 class="portlet-bordered-header">
 			<xsl:value-of disable-output-escaping="yes" select="portlet-name" />
-		</h3>
+		</h1>
     </xsl:if>
         <div class="portlet-bordered-content">
             <xsl:apply-templates select="html-portlet" />
