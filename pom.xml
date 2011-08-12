@@ -43,7 +43,7 @@
 
 	<properties>
 		<componentName>html</componentName>
-		<jiraProjectName>LUTECE</jiraProjectName>
+		<jiraProjectName>HTML</jiraProjectName>
 		<jiraComponentId>10178</jiraComponentId>
 	</properties>
     <scm>
