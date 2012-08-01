@@ -6,7 +6,15 @@
 	<xsl:output method="html" indent="yes" />
 
 	<xsl:template match="portlet">
-		<div class="portlet-background-image-on-title">
+	
+	<xsl:variable name="device_class">
+	<xsl:choose>
+		<xsl:when test="string(display-on-small-device)='0'">hide-for-small</xsl:when>
+		<xsl:otherwise></xsl:otherwise>
+	</xsl:choose>
+	</xsl:variable>
+
+		<div class="portlet-background-image-on-title {$device_class}">
 			<h1 class="portlet-background-image-on-title-header">
 				<xsl:value-of disable-output-escaping="yes" select="portlet-name" />
 			</h1>

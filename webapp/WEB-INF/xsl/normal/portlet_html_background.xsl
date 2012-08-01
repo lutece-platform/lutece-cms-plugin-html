@@ -4,7 +4,15 @@
 <xsl:output method="html" indent="yes"/>
 
 <xsl:template match="portlet">
-	<div class="portlet-background append-bottom">
+
+	<xsl:variable name="device_class">
+	<xsl:choose>
+		<xsl:when test="string(display-on-small-device)='0'">hide-for-small</xsl:when>
+		<xsl:otherwise></xsl:otherwise>
+	</xsl:choose>
+	</xsl:variable>
+	
+	<div class="portlet-background append-bottom {$device_class}">
 		<xsl:choose>
 			<xsl:when test="not(string(display-portlet-title)='1')">
 				<h1 class="portlet-background-header -lutece-border-radius-top">

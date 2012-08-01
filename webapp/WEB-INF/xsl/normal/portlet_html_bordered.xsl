@@ -5,8 +5,14 @@
 
 <xsl:template match="portlet">
 	
+	<xsl:variable name="device_class">
+	<xsl:choose>
+		<xsl:when test="string(display-on-small-device)='0'">hide-for-small</xsl:when>
+		<xsl:otherwise></xsl:otherwise>
+	</xsl:choose>
+	</xsl:variable>
 
-    <div class="portlet-bordered">
+    <div class="portlet-bordered  {$device_class">
     <xsl:if test="not(string(display-portlet-title)='1')">
 		<h1 class="portlet-bordered-header">
 			<xsl:value-of disable-output-escaping="yes" select="portlet-name" />

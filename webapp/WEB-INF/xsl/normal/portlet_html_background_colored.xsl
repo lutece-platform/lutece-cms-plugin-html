@@ -4,7 +4,16 @@
 <xsl:output method="html" indent="yes"/>
 
 <xsl:template match="portlet">
-	<div class="portlet-background-colored">
+
+	
+	<xsl:variable name="device_class">
+	<xsl:choose>
+		<xsl:when test="string(display-on-small-device)='0'">hide-for-small</xsl:when>
+		<xsl:otherwise></xsl:otherwise>
+	</xsl:choose>
+	</xsl:variable>
+
+	<div class="portlet-background-colored {$device_class}">
 		<xsl:if test="not(string(display-portlet-title)='1')">
 			<div class="portlet-background-colored-header">
 			<h1 class="portlet-background-colored-header">
