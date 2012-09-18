@@ -12,15 +12,15 @@
 	</xsl:choose>
 	</xsl:variable>
 
-    <div class="portlet-bordered  {$device_class">
+    <div class="alert  {$device_class}">
     <xsl:if test="not(string(display-portlet-title)='1')">
-		<h1 class="portlet-bordered-header">
+	<h2 class="portlet-bordered-header">
 			<xsl:value-of disable-output-escaping="yes" select="portlet-name" />
-		</h1>
+		</h2>
     </xsl:if>
-        <div class="portlet-bordered-content">
-            <xsl:apply-templates select="html-portlet" />
-        </div>
+    <div class="portlet-bordered-content">
+        <xsl:apply-templates select="html-portlet" />
+    </div>
     </div>
 	<br />
 </xsl:template>
