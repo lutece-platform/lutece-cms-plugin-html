@@ -125,12 +125,13 @@ public class HtmlPortletJspBean extends PortletJspBean
         String strPortletId = request.getParameter( PARAMETER_PORTLET_ID );
         int nPortletId = Integer.parseInt( strPortletId );
         Portlet portlet = PortletHome.findByPrimaryKey( nPortletId );
+        _strPortletTypeId = portlet.getPortletTypeId( );
         IHtmlPortlet htmlPortlet = (IHtmlPortlet) portlet;
         Map<String, Object> model = new HashMap<String, Object>( );
         model.put( MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
         model.put( MARK_LOCALE, AdminUserService.getLocale( request ).getLanguage( ) );
         model.put( MARK_HTML_CONTENT, htmlPortlet.getHtml( ) );
-        model.put( MARK_EDITOR, PORTLET_TYPE_LEGACY_HTML.equals( portlet.getPortletTypeId( ) ) );
+        model.put( MARK_EDITOR, PORTLET_TYPE_LEGACY_HTML.equals( _strPortletTypeId ) );
 
         HtmlTemplate template = getModifyTemplate( portlet, model );
 
