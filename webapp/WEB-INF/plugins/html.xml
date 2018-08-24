@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?><plug-in>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><plug-in>
 
     <!-- Plugin Informations -->
     <name>html</name>
     <class>fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation</class>
-    <version>3.1.2-SNAPSHOT</version>
+    <version>4.0.0</version>
     <documentation/>
     <installation/>
     <changes/>
