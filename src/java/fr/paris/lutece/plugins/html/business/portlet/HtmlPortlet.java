@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2014, Mairie de Paris
+ * Copyright (c) 2002-2018, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,13 +38,12 @@ import fr.paris.lutece.util.xml.XmlUtil;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
  * This class represents business objects HtmlPortlet
  */
-public class HtmlPortlet extends Portlet
+public class HtmlPortlet extends Portlet implements IHtmlPortlet
 {
-    /////////////////////////////////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////////////////////////////////
     // Constants
     private static final String TAG_HTML_PORTLET = "html-portlet";
     private static final String TAG_HTML_PORTLET_CONTENT = "html-portlet-content";
@@ -53,16 +52,18 @@ public class HtmlPortlet extends Portlet
     /**
      * Sets the identifier of the portlet type to value specified
      */
-    public HtmlPortlet(  )
+    public HtmlPortlet( )
     {
-        setPortletTypeId( HtmlPortletHome.getInstance(  ).getPortletTypeId(  ) );
+        setPortletTypeId( HtmlPortletHome.getInstance( ).getPortletTypeId( ) );
     }
 
     /**
      * Sets the Html portlet content
      *
-     * @param strHtml the Html code to sets content
+     * @param strHtml
+     *            the Html code to sets content
      */
+    @Override
     public void setHtml( String strHtml )
     {
         _strHtml = strHtml;
@@ -73,7 +74,8 @@ public class HtmlPortlet extends Portlet
      *
      * @return the Html code content
      */
-    public String getHtml(  )
+    @Override
+    public String getHtml( )
     {
         return _strHtml;
     }
@@ -81,14 +83,16 @@ public class HtmlPortlet extends Portlet
     /**
      * Returns the Xml code of the HTML portlet without XML heading
      *
-     * @param request The Request
+     * @param request
+     *            The Request
      * @return the Xml code of the HTML portlet content
      */
+    @Override
     public String getXml( HttpServletRequest request )
     {
-        StringBuffer strXml = new StringBuffer(  );
+        StringBuffer strXml = new StringBuffer( );
         XmlUtil.beginElement( strXml, TAG_HTML_PORTLET );
-        XmlUtil.addElementHtml( strXml, TAG_HTML_PORTLET_CONTENT, getHtml(  ) );
+        XmlUtil.addElementHtml( strXml, TAG_HTML_PORTLET_CONTENT, getHtml( ) );
         XmlUtil.endElement( strXml, TAG_HTML_PORTLET );
 
         return addPortletTags( strXml );
@@ -97,27 +101,31 @@ public class HtmlPortlet extends Portlet
     /**
      * Returns the Xml code of the HTML portlet with XML heading
      *
-     * @param request The request
+     * @param request
+     *            The request
      * @return the Xml code of the HTML portlet
      */
+    @Override
     public String getXmlDocument( HttpServletRequest request )
     {
-        return XmlUtil.getXmlHeader(  ) + getXml( request );
+        return XmlUtil.getXmlHeader( ) + getXml( request );
     }
 
     /**
      * Updates the current instance of the HtmlPortlet object
      */
-    public void update(  )
+    @Override
+    public void update( )
     {
-        HtmlPortletHome.getInstance(  ).update( this );
+        HtmlPortletHome.getInstance( ).update( this );
     }
 
     /**
      * Removes the current instance of the HtmlPortlet object
      */
-    public void remove(  )
+    @Override
+    public void remove( )
     {
-        HtmlPortletHome.getInstance(  ).remove( this );
+        HtmlPortletHome.getInstance( ).remove( this );
     }
 }

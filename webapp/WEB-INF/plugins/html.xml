@@ -12,7 +12,7 @@
     <provider>html.plugin.provider</provider>
     <provider-url>http://lutece.paris.fr</provider-url>
     <icon-url>images/admin/skin/plugins/html/html.png</icon-url>
-    <copyright>Copyright 2001-2011 Mairie de Paris</copyright>
+    <copyright>Copyright 2001-2018 Mairie de Paris</copyright>
     <core-version-dependency>
         <min-core-version>5.0.0</min-core-version>
         <max-core-version/>
@@ -25,6 +25,21 @@
             <portlet-class>fr.paris.lutece.plugins.html.business.portlet.HtmlPortletHome</portlet-class>
             <portlet-type-id>HTML_PORTLET</portlet-type-id>
             <portlet-type-name>html.portlet.name</portlet-type-name>
+            <portlet-creation-url>plugins/html/CreatePortletHtml.jsp</portlet-creation-url>
+            <portlet-update-url>plugins/html/ModifyPortletHtml.jsp</portlet-update-url>
+            <portlet-create-action-url>plugins/html/DoCreatePortletHtml.jsp</portlet-create-action-url>
+            <portlet-modify-action-url>plugins/html/DoModifyPortletHtml.jsp</portlet-modify-action-url>
+            <portlet-create-script-template>/admin/portlet/script_create_portlet.html</portlet-create-script-template>
+            <portlet-modify-script-template>/admin/portlet/script_modify_portlet.html</portlet-modify-script-template>
+            <portlet-create-specific-template>/admin/plugins/html/portlet_html.html</portlet-create-specific-template>
+            <portlet-modify-specific-template>/admin/plugins/html/portlet_html.html</portlet-modify-specific-template>
+            <portlet-create-specific-form-template/>
+            <portlet-modify-specific-form-template/>
+        </portlet>
+        <portlet>
+            <portlet-class>fr.paris.lutece.plugins.html.business.portlet.UntransformedHtmlPortletHome</portlet-class>
+            <portlet-type-id>HTML_UNTRANSFORMED_PORTLET</portlet-type-id>
+            <portlet-type-name>html.portlet.untransformed.name</portlet-type-name>
             <portlet-creation-url>plugins/html/CreatePortletHtml.jsp</portlet-creation-url>
             <portlet-update-url>plugins/html/ModifyPortletHtml.jsp</portlet-update-url>
             <portlet-create-action-url>plugins/html/DoCreatePortletHtml.jsp</portlet-create-action-url>

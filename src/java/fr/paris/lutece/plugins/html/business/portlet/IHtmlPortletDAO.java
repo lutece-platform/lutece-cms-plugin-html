@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2014, Mairie de Paris
+ * Copyright (c) 2002-2018, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +36,6 @@ package fr.paris.lutece.plugins.html.business.portlet;
 import fr.paris.lutece.portal.business.portlet.IPortletInterfaceDAO;
 import fr.paris.lutece.portal.business.portlet.Portlet;
 
-
 /**
  *
  * @author lenaini
@@ -45,26 +44,38 @@ public interface IHtmlPortletDAO extends IPortletInterfaceDAO
 {
     /**
      * Delete record from table
-     * @param nPortletId The indentifier of the Portlet
+     * 
+     * @param nPortletId
+     *            The indentifier of the Portlet
      */
+    @Override
     void delete( int nPortletId );
 
     /**
      * Insert a new record in the table.
-     * @param portlet The Instance of the Portlet
+     * 
+     * @param portlet
+     *            The Instance of the Portlet
      */
+    @Override
     void insert( Portlet portlet );
 
     /**
      * load the data of dbpagePortlet from the table
-     * @param nIdPortlet The indentifier of the  portlet
+     * 
+     * @param nIdPortlet
+     *            The indentifier of the portlet
      * @return portlet The instance of the object portlet
      */
+    @Override
     Portlet load( int nIdPortlet );
 
     /**
      * Update the record in the table
-     * @param portlet The reference of the portlet
+     * 
+     * @param portlet
+     *            The reference of the portlet
      */
+    @Override
     void store( Portlet portlet );
 }

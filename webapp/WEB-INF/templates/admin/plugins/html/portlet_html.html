@@ -1,4 +1,9 @@
 <#include "/admin/util/editor/editor.html" />
 <label>#i18n{html.create_portlet_html.labelHtmlContent}</label>
-<textarea id="html_content" class="richtext" name="html_content" rows="12"">${html_content}</textarea>
-<@initEditor />
+<#if editor>
+    <textarea id="html_content" class="richtext" name="html_content" rows="12">${html_content}</textarea>
+    <@initEditor />
+<#else>
+    <br>
+    <textarea id="html_content" class="form-control" name="html_content" rows="12">${html_content}</textarea>
+</#if>

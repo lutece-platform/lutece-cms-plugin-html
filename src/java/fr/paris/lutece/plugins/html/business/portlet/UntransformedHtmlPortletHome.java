@@ -41,18 +41,18 @@ import fr.paris.lutece.portal.service.spring.SpringContextService;
 /**
  * This class provides instances management methods for HtmlPortlet objects
  */
-public final class HtmlPortletHome extends PortletHome
+public final class UntransformedHtmlPortletHome extends PortletHome
 {
     // Static variable pointed at the DAO instance
-    private static IHtmlPortletDAO _dao = (IHtmlPortletDAO) SpringContextService.getPluginBean( "html", "htmlPortletDAO" );
+    private static IHtmlPortletDAO _dao = (IHtmlPortletDAO) SpringContextService.getPluginBean( "html", "htmlUntransformedPortletDAO" );
 
     /* This class implements the Singleton design pattern. */
-    private static HtmlPortletHome _singleton = null;
+    private static UntransformedHtmlPortletHome _singleton = null;
 
     /**
      * Constructor
      */
-    public HtmlPortletHome( )
+    public UntransformedHtmlPortletHome( )
     {
         if ( _singleton == null )
         {
@@ -83,7 +83,7 @@ public final class HtmlPortletHome extends PortletHome
     {
         if ( _singleton == null )
         {
-            _singleton = new HtmlPortletHome( );
+            _singleton = new UntransformedHtmlPortletHome( );
         }
 
         return _singleton;

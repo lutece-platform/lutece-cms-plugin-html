@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2018, Mairie de Paris
+ * Copyright (c) 2002-2016, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,14 +31,15 @@
  *
  * License 1.0
  */
+
 package fr.paris.lutece.plugins.html.business.portlet;
 
 import fr.paris.lutece.portal.business.portlet.Portlet;
 
 /**
- * this class provides Data Access methods for HtmlPortlet objects
+ * UntransformedHtmlPortletDAO
  */
-public final class HtmlPortletDAO extends BaseHtmlPortletDAO implements IHtmlPortletDAO
+public class UntransformedHtmlPortletDAO extends BaseHtmlPortletDAO implements IHtmlPortletDAO
 {
 
     /**
@@ -51,7 +52,7 @@ public final class HtmlPortletDAO extends BaseHtmlPortletDAO implements IHtmlPor
     @Override
     public Portlet load( int nIdPortlet )
     {
-        return load( nIdPortlet, new HtmlPortlet( ) );
+        return load( nIdPortlet, new UntransformedHtmlPortlet( ) );
     }
 
 }

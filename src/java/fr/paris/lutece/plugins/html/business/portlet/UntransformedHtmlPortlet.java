@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2018, Mairie de Paris
+ * Copyright (c) 2002-2016, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -33,25 +33,64 @@
  */
 package fr.paris.lutece.plugins.html.business.portlet;
 
-import fr.paris.lutece.portal.business.portlet.Portlet;
+import fr.paris.lutece.portal.business.portlet.PortletHtmlContent;
+import javax.servlet.http.HttpServletRequest;
 
 /**
- * this class provides Data Access methods for HtmlPortlet objects
+ * UntransformedHtmlPortlet
  */
-public final class HtmlPortletDAO extends BaseHtmlPortletDAO implements IHtmlPortletDAO
+public class UntransformedHtmlPortlet extends PortletHtmlContent implements IHtmlPortlet
 {
+    private String _strHtml;
 
     /**
-     * load the data of the portlet from the table
+     * Sets the Html portlet content
      *
-     * @param nIdPortlet
-     *            The indentifier of the portlet
-     * @return portlet The instance of the object portlet
+     * @param strHtml
+     *            the Html code to sets content
      */
     @Override
-    public Portlet load( int nIdPortlet )
+    public void setHtml( String strHtml )
     {
-        return load( nIdPortlet, new HtmlPortlet( ) );
+        _strHtml = strHtml;
+    }
+
+    /**
+     * Returns the content of the Html portlet
+     *
+     * @return the Html code content
+     */
+    @Override
+    public String getHtml( )
+    {
+        return _strHtml;
+    }
+
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public String getHtmlContent( HttpServletRequest request )
+    {
+        return _strHtml;
+    }
+
+    /**
+     * Updates the current instance of the HtmlPortlet object
+     */
+    @Override
+    public void update( )
+    {
+        UntransformedHtmlPortletHome.getInstance( ).update( this );
+    }
+
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public void remove( )
+    {
+        UntransformedHtmlPortletHome.getInstance( ).remove( this );
     }
 
 }

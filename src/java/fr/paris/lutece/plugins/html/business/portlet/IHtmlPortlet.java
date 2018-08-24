@@ -33,25 +33,44 @@
  */
 package fr.paris.lutece.plugins.html.business.portlet;
 
-import fr.paris.lutece.portal.business.portlet.Portlet;
-
 /**
- * this class provides Data Access methods for HtmlPortlet objects
+ * IHtmlPortlet
  */
-public final class HtmlPortletDAO extends BaseHtmlPortletDAO implements IHtmlPortletDAO
+public interface IHtmlPortlet
 {
+    /**
+     * Set the portlet ID
+     * 
+     * @param nId
+     *            the portlet ID
+     */
+    void setId( int nId );
 
     /**
-     * load the data of the portlet from the table
-     *
-     * @param nIdPortlet
-     *            The indentifier of the portlet
-     * @return portlet The instance of the object portlet
+     * Get the portlet ID
+     * 
+     * @return the portlet ID
      */
-    @Override
-    public Portlet load( int nIdPortlet )
-    {
-        return load( nIdPortlet, new HtmlPortlet( ) );
-    }
+    int getId( );
+
+    /**
+     * Sets the Html portlet content
+     *
+     * @param strHtml
+     *            the Html code to sets content
+     */
+    void setHtml( String strHtml );
+
+    /**
+     * Returns the content of the Html portlet
+     *
+     * @return the Html code content
+     */
+    String getHtml( );
+
+    /**
+     * Update the portlet
+     */
+    void update( );
 
 }
