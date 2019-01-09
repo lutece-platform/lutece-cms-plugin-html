@@ -7,6 +7,8 @@
 <xsl:variable name="device_class">
 <xsl:choose>
 	<xsl:when test="string(display-on-small-device)='0'">hidden-phone</xsl:when>
+	<xsl:when test="string(display-on-normal-device)='0'">hidden-tablet</xsl:when>
+	<xsl:when test="string(display-on-large-device)='0'">hidden-desktop</xsl:when>
 	<xsl:otherwise></xsl:otherwise>
 </xsl:choose>
 </xsl:variable>
