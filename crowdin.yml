@@ -1,0 +1,4 @@
+files:
+  - source: /src/java/fr/paris/lutece/plugins/html/resources/html_messages.properties
+    translation: >-
+      /src/java/fr/paris/lutece/plugins/html/resources/html_messages_%two_letters_code%.properties
