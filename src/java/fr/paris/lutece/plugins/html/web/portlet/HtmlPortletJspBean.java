@@ -281,7 +281,7 @@ public class HtmlPortletJspBean extends PortletJspBean
             }
             htmlPortlet.setHtml( strContent );
         }
-        catch( HtmlCleanerException e )
+        catch( Exception e )
         {
             strErrorUrl = AdminMessageService.getMessageUrl( request, Messages.HTML_CLEANER_ERROR, AdminMessage.TYPE_STOP );
         }
