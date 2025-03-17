@@ -35,11 +35,13 @@
 package fr.paris.lutece.plugins.html.business.portlet;
 
 import fr.paris.lutece.portal.business.portlet.Portlet;
+import jakarta.enterprise.context.ApplicationScoped;
 
 /**
  * UntransformedHtmlPortletDAO
  */
-public class UntransformedHtmlPortletDAO extends BaseHtmlPortletDAO implements IHtmlPortletDAO
+@ApplicationScoped
+public class UntransformedHtmlPortletDAO extends BaseHtmlPortletDAO
 {
 
     /**

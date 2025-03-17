@@ -41,7 +41,6 @@ import fr.paris.lutece.plugins.html.business.portlet.UntransformedHtmlPortletHom
 import fr.paris.lutece.portal.business.portlet.Portlet;
 import fr.paris.lutece.portal.business.portlet.PortletHome;
 import fr.paris.lutece.portal.service.admin.AdminUserService;
-import fr.paris.lutece.portal.service.html.HtmlCleanerException;
 import fr.paris.lutece.portal.service.html.HtmlCleanerService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
@@ -53,11 +52,15 @@ import fr.paris.lutece.util.html.HtmlTemplate;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.enterprise.context.SessionScoped;
+import jakarta.inject.Named;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * This class provides the user interface to manage Html Portlet features
  */
+@SessionScoped
+@Named
 public class HtmlPortletJspBean extends PortletJspBean
 {
     // //////////////////////////////////////////////////////////////////////////

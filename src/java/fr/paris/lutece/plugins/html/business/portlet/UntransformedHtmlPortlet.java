@@ -34,7 +34,7 @@
 package fr.paris.lutece.plugins.html.business.portlet;
 
 import fr.paris.lutece.portal.business.portlet.PortletHtmlContent;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * UntransformedHtmlPortlet

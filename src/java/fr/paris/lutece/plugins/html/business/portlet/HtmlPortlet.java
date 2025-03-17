@@ -36,7 +36,7 @@ package fr.paris.lutece.plugins.html.business.portlet;
 import fr.paris.lutece.portal.business.portlet.Portlet;
 import fr.paris.lutece.util.xml.XmlUtil;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * This class represents business objects HtmlPortlet
