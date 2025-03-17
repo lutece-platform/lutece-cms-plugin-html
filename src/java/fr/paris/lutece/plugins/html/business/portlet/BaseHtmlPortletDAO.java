@@ -61,12 +61,14 @@ public abstract class BaseHtmlPortletDAO implements IHtmlPortletDAO
     public void insert( Portlet portlet )
     {
         IHtmlPortlet p = (IHtmlPortlet) portlet;
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT );
-        daoUtil.setInt( 1, p.getId( ) );
-        daoUtil.setString( 2, p.getHtml( ) );
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT ) )
+        {
+        	daoUtil.setInt( 1, p.getId( ) );
+            daoUtil.setString( 2, p.getHtml( ) );
 
-        daoUtil.executeUpdate( );
-        daoUtil.free( );
+            daoUtil.executeUpdate( );
+            daoUtil.free( );
+        }
     }
 
     /**
@@ -78,11 +80,13 @@ public abstract class BaseHtmlPortletDAO implements IHtmlPortletDAO
     @Override
     public void delete( int nPortletId )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE );
-        daoUtil.setInt( 1, nPortletId );
+    	try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE ) )
+    	{
+    		daoUtil.setInt( 1, nPortletId );
 
-        daoUtil.executeUpdate( );
-        daoUtil.free( );
+            daoUtil.executeUpdate( );
+            daoUtil.free( );
+    	}      
     }
 
     /**
@@ -95,13 +99,15 @@ public abstract class BaseHtmlPortletDAO implements IHtmlPortletDAO
     public void store( Portlet portlet )
     {
         IHtmlPortlet p = (IHtmlPortlet) portlet;
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE );
-        daoUtil.setInt( 1, p.getId( ) );
-        daoUtil.setString( 2, p.getHtml( ) );
-        daoUtil.setInt( 3, p.getId( ) );
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE ) )
+        {
+        	daoUtil.setInt( 1, p.getId( ) );
+            daoUtil.setString( 2, p.getHtml( ) );
+            daoUtil.setInt( 3, p.getId( ) );
 
-        daoUtil.executeUpdate( );
-        daoUtil.free( );
+            daoUtil.executeUpdate( );
+            daoUtil.free( );
+        }       
     }
 
     /**
@@ -115,18 +121,20 @@ public abstract class BaseHtmlPortletDAO implements IHtmlPortletDAO
      */
     protected Portlet load( int nIdPortlet, IHtmlPortlet portlet )
     {
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT );
-        daoUtil.setInt( 1, nIdPortlet );
-        daoUtil.executeQuery( );
-
-        if ( daoUtil.next( ) )
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT ) )
         {
-            portlet.setId( daoUtil.getInt( 1 ) );
-            portlet.setHtml( daoUtil.getString( 2 ) );
+        	daoUtil.setInt( 1, nIdPortlet );
+            daoUtil.executeQuery( );
+
+            if ( daoUtil.next( ) )
+            {
+                portlet.setId( daoUtil.getInt( 1 ) );
+                portlet.setHtml( daoUtil.getString( 2 ) );
+            }
+
+            daoUtil.free( );
         }
-
-        daoUtil.free( );
-
+        
         return (Portlet) portlet;
     }
 }

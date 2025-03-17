@@ -34,11 +34,13 @@
 package fr.paris.lutece.plugins.html.business.portlet;
 
 import fr.paris.lutece.portal.business.portlet.Portlet;
+import jakarta.enterprise.context.ApplicationScoped;
 
 /**
  * this class provides Data Access methods for HtmlPortlet objects
  */
-public final class HtmlPortletDAO extends BaseHtmlPortletDAO implements IHtmlPortletDAO
+@ApplicationScoped
+public class HtmlPortletDAO extends BaseHtmlPortletDAO
 {
 
     /**
