@@ -67,7 +67,6 @@ public abstract class BaseHtmlPortletDAO implements IHtmlPortletDAO
             daoUtil.setString( 2, p.getHtml( ) );
 
             daoUtil.executeUpdate( );
-            daoUtil.free( );
         }
     }
 
@@ -85,7 +84,6 @@ public abstract class BaseHtmlPortletDAO implements IHtmlPortletDAO
     		daoUtil.setInt( 1, nPortletId );
 
             daoUtil.executeUpdate( );
-            daoUtil.free( );
     	}      
     }
 
@@ -106,7 +104,6 @@ public abstract class BaseHtmlPortletDAO implements IHtmlPortletDAO
             daoUtil.setInt( 3, p.getId( ) );
 
             daoUtil.executeUpdate( );
-            daoUtil.free( );
         }       
     }
 
@@ -131,8 +128,6 @@ public abstract class BaseHtmlPortletDAO implements IHtmlPortletDAO
                 portlet.setId( daoUtil.getInt( 1 ) );
                 portlet.setHtml( daoUtil.getString( 2 ) );
             }
-
-            daoUtil.free( );
         }
         
         return (Portlet) portlet;
