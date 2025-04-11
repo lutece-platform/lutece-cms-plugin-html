@@ -52,14 +52,14 @@ import fr.paris.lutece.util.html.HtmlTemplate;
 import java.util.HashMap;
 import java.util.Map;
 
-import jakarta.enterprise.context.SessionScoped;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * This class provides the user interface to manage Html Portlet features
  */
-@SessionScoped
+@RequestScoped
 @Named
 public class HtmlPortletJspBean extends PortletJspBean
 {
@@ -79,7 +79,6 @@ public class HtmlPortletJspBean extends PortletJspBean
     private static final String MESSAGE_INVALID_PORTLET_TYPE_ERROR = "html.message.invalidPortletType";
 
     private static final long serialVersionUID = 1L;
-    private String _strPortletTypeId;
 
     /**
      * Returns the properties prefix used for html portlet and defined in lutece.properties file
@@ -102,15 +101,15 @@ public class HtmlPortletJspBean extends PortletJspBean
     public String getCreate( HttpServletRequest request )
     {
         String strPageId = request.getParameter( PARAMETER_PAGE_ID );
-        _strPortletTypeId = request.getParameter( PARAMETER_PORTLET_TYPE_ID );
+        String strPortletTypeId = request.getParameter( PARAMETER_PORTLET_TYPE_ID );
 
         Map<String, Object> model = new HashMap<String, Object>( );
         model.put( MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
         model.put( MARK_LOCALE, AdminUserService.getLocale( request ).getLanguage( ) );
         model.put( MARK_HTML_CONTENT, "" );
-        model.put( MARK_EDITOR, PORTLET_TYPE_LEGACY_HTML.equals( _strPortletTypeId ) );
+        model.put( MARK_EDITOR, PORTLET_TYPE_LEGACY_HTML.equals( strPortletTypeId ) );
 
-        HtmlTemplate template = getCreateTemplate( strPageId, _strPortletTypeId, model );
+        HtmlTemplate template = getCreateTemplate( strPageId, strPortletTypeId, model );
 
         return template.getHtml( );
     }
@@ -128,13 +127,13 @@ public class HtmlPortletJspBean extends PortletJspBean
         String strPortletId = request.getParameter( PARAMETER_PORTLET_ID );
         int nPortletId = Integer.parseInt( strPortletId );
         Portlet portlet = PortletHome.findByPrimaryKey( nPortletId );
-        _strPortletTypeId = portlet.getPortletTypeId( );
+        String strPortletTypeId = portlet.getPortletTypeId( );
         IHtmlPortlet htmlPortlet = (IHtmlPortlet) portlet;
         Map<String, Object> model = new HashMap<String, Object>( );
         model.put( MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
         model.put( MARK_LOCALE, AdminUserService.getLocale( request ).getLanguage( ) );
         model.put( MARK_HTML_CONTENT, htmlPortlet.getHtml( ) );
-        model.put( MARK_EDITOR, PORTLET_TYPE_LEGACY_HTML.equals( _strPortletTypeId ) );
+        model.put( MARK_EDITOR, PORTLET_TYPE_LEGACY_HTML.equals( strPortletTypeId ) );
 
         HtmlTemplate template = getModifyTemplate( portlet, model );
 
@@ -154,15 +153,16 @@ public class HtmlPortletJspBean extends PortletJspBean
         Portlet portlet;
         PortletHome portletHome;
         boolean bClean;
+        String strPortletTypeId = request.getParameter( PARAMETER_PORTLET_TYPE_ID );
 
-        if ( _strPortletTypeId.equals( PORTLET_TYPE_LEGACY_HTML ) )
+        if ( strPortletTypeId.equals( PORTLET_TYPE_LEGACY_HTML ) )
         {
             portlet = new HtmlPortlet( );
             bClean = true;
             portletHome = HtmlPortletHome.getInstance( );
         }
         else
-            if ( _strPortletTypeId.equals( PORTLET_TYPE_UNTRANSFORMED_HTML ) )
+            if ( strPortletTypeId.equals( PORTLET_TYPE_UNTRANSFORMED_HTML ) )
             {
                 portlet = new UntransformedHtmlPortlet( );
                 bClean = false;
@@ -214,6 +214,7 @@ public class HtmlPortletJspBean extends PortletJspBean
     {
         // recovers portlet attributes
         String strPortletId = request.getParameter( PARAMETER_PORTLET_ID );
+        String strPortletTypeId = request.getParameter( PARAMETER_PORTLET_TYPE_ID );
         int nPortletId = Integer.parseInt( strPortletId );
         Portlet portlet = PortletHome.findByPrimaryKey( nPortletId );
 
@@ -226,12 +227,12 @@ public class HtmlPortletJspBean extends PortletJspBean
         }
 
         boolean bClean;
-        if ( _strPortletTypeId.equals( PORTLET_TYPE_LEGACY_HTML ) )
+        if ( strPortletTypeId.equals( PORTLET_TYPE_LEGACY_HTML ) )
         {
             bClean = true;
         }
         else
-            if ( _strPortletTypeId.equals( PORTLET_TYPE_UNTRANSFORMED_HTML ) )
+            if ( strPortletTypeId.equals( PORTLET_TYPE_UNTRANSFORMED_HTML ) )
             {
                 bClean = false;
             }
