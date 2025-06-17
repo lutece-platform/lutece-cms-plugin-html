@@ -43,8 +43,6 @@
 
     <properties>
         <componentName>html</componentName>
-        <jiraProjectName>HTML</jiraProjectName>
-        <jiraComponentId>10178</jiraComponentId>
     </properties>
     
     <scm>
