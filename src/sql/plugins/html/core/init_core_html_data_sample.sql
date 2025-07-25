@@ -1,3 +1,6 @@
+--liquibase formatted sql
+--changeset html:init_core_html_data_sample.sql
+--preconditions onFail:MARK_RAN onError:WARN
 
 --
 -- Dumping data for table core_portlet
