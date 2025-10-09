@@ -1,6 +1,6 @@
---liquibase formatted sql
---changeset html:update_db_core_html-2.0.12-2.0.14.sql
---preconditions onFail:MARK_RAN onError:WARN
+-- liquibase formatted sql
+-- changeset html:update_db_core_html-2.0.12-2.0.14.sql
+-- preconditions onFail:MARK_RAN onError:WARN
 --
 -- Dumping data for table `core_style`
 --

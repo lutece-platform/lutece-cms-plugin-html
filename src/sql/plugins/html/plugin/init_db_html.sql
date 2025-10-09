@@ -1,6 +1,6 @@
---liquibase formatted sql
---changeset html:init_db_html.sql
---preconditions onFail:MARK_RAN onError:WARN
+-- liquibase formatted sql
+-- changeset html:init_db_html.sql
+-- preconditions onFail:MARK_RAN onError:WARN
 --
 -- Dumping data for table html_portlet
 --
