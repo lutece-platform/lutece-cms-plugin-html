@@ -10,7 +10,7 @@
     <groupId>fr.paris.lutece.plugins</groupId>
     <artifactId>plugin-html</artifactId>
     <packaging>lutece-plugin</packaging>
-    <version>5.0.1-SNAPSHOT</version>
+    <version>5.0.1-beta-01</version>
     <name>Lutece html plugin</name>
 
     <repositories>
@@ -51,7 +51,7 @@
         <connection>scm:git:https://github.com/lutece-platform/lutece-cms-plugin-html.git</connection>
         <developerConnection>scm:git:https://github.com/lutece-platform/lutece-cms-plugin-html.git</developerConnection>
         <url>https://github.com/lutece-platform/lutece-cms-plugin-html.git</url>
-      <tag>HEAD</tag>
+      <tag>plugin-html-5.0.1-beta-01</tag>
   </scm>
     
 </project>
