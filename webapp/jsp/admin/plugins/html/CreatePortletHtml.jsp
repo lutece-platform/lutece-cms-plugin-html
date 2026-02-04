@@ -6,5 +6,3 @@
 
 ${ htmlPortletJspBean.init( pageContext.request, HtmlPortletJspBean.RIGHT_MANAGE_ADMIN_SITE ) }
 ${ htmlPortletJspBean.getCreate ( pageContext.request ) }
-
-<%@ include file="../../AdminFooter.jsp" %>
