@@ -8,6 +8,6 @@
 DROP TABLE IF EXISTS html_portlet;
 CREATE TABLE html_portlet (
   id_portlet int DEFAULT '0' NOT NULL,
-  html LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  html LONG VARCHAR,
   PRIMARY KEY (id_portlet)
 );
