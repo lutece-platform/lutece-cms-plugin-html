@@ -1,21 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document>
-	<properties>
-		<title>Lutèce : plugin html</title>
-	</properties>
-	<body>
-		<section name="Plugin html">
-			<p>
-			Le plugin-html permet d'ajouter du contenu riche (html) dans un portail Lutece.
-			</p>
-			<p>
-			Pour ajouter du contenu, suivre les étapes suivantes :
-			<ol>
-                <li>activez et donnez vous les droits pour plugin-html depuis le backoffice de Lutece.</li>
-                <li>dans l'administration du site, allez dans l'onglet "ajouter une rubrique" et ajouter une rubrique de type "Html ou texte libre"</li>
-                <li>donnez un titre, une position dans la page et un contenu à votre portlet html.</li>
-            </ol>
-			</p>
-		</section>
-	</body>
-</document>  
+    <properties>
+        <title>Plugin HTML</title>
+    </properties>
+    <head>
+        <meta name="keywords" content="cms,html,portlet,contenu,page"/>
+    </head>
+    <body>
+        <section name="Plugin HTML">
+            <subsection name="Introduction">
+                <p>
+                    Le plugin <code>plugin-html</code> permet de créer des portlets contenant du contenu HTML
+                    au sein des pages Lutece. Il propose deux types de portlets :
+                </p>
+                <ul>
+                    <li>
+                        <code>HTML_PORTLET</code> — Un portlet HTML dont le contenu est nettoyé par le
+                        <code>HtmlCleanerService</code> avant d'être enregistré. Le rendu est effectué
+                        via le pipeline de transformation XSL (rendu standard des portlets Lutece).
+                    </li>
+                    <li>
+                        <code>HTML_UNTRANSFORMED_PORTLET</code> — Un portlet HTML dont le contenu est enregistré
+                        et affiché tel quel, sans aucun nettoyage HTML ni transformation XSL. Cela est utile
+                        lorsque vous avez besoin d'un contrôle total sur le rendu HTML.
+                    </li>
+                </ul>
+                <p>
+                    Les deux types de portlets partagent la même interface d'administration et la même table
+                    en base de données (<code>html_portlet</code>), mais diffèrent dans leur comportement
+                    de rendu.
+                </p>
+            </subsection>
+            <subsection name="Configuration">
+                <p>
+                    Le plugin utilise deux beans Spring injectés via <code>SpringContextService.getPluginBean</code> :
+                </p>
+                <table>
+                    <tr>
+                        <th>Identifiant du bean</th>
+                        <th>Interface</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><code>htmlPortletDAO</code></td>
+                        <td><code>IHtmlPortletDAO</code></td>
+                        <td>DAO pour le portlet HTML (avec nettoyage HTML)</td>
+                    </tr>
+                    <tr>
+                        <td><code>htmlUntransformedPortletDAO</code></td>
+                        <td><code>IHtmlPortletDAO</code></td>
+                        <td>DAO pour le portlet HTML non transformé (sans nettoyage HTML)</td>
+                    </tr>
+                </table>
+                <p>
+                    Ces beans doivent être déclarés dans le contexte Spring du plugin afin que les classes
+                    <code>HtmlPortletHome</code> et <code>UntransformedHtmlPortletHome</code> puissent
+                    les récupérer au démarrage.
+                </p>
+            </subsection>
+            <subsection name="Usage">
+                <p>
+                    Une fois le plugin activé, deux nouveaux types de portlets sont disponibles dans le
+                    back-office Lutece lors de l'ajout de portlets à une page :
+                </p>
+                <ul>
+                    <li>
+                        <code>Portlet HTML</code> — propose un éditeur de texte riche (WYSIWYG) pour saisir
+                        du contenu HTML. Le contenu est nettoyé par le <code>HtmlCleanerService</code> de Lutece
+                        avant d'être enregistré en base de données. Le rendu du portlet passe par le pipeline
+                        de transformation XSL, appliquant la feuille de style configurée (style par défaut ou
+                        fond coloré).
+                    </li>
+                    <li>
+                        <code>Portlet HTML non transformé</code> — propose une zone de texte brut pour saisir
+                        du HTML. Le contenu est enregistré exactement tel que saisi et affiché sans aucune
+                        transformation XSL. Cela convient pour intégrer des scripts, des iframes ou tout HTML
+                        qui ne doit pas être modifié.
+                    </li>
+                </ul>
+                <p>
+                    Deux styles XSL sont disponibles pour le portlet HTML standard :
+                </p>
+                <ul>
+                    <li>Style par défaut — affiche le contenu HTML dans un conteneur de portlet standard.</li>
+                    <li>Style fond coloré — affiche le contenu HTML dans un conteneur <code>well</code> avec un fond coloré.</li>
+                </ul>
+                <p>
+                    L'administration des portlets est gérée par la classe <code>HtmlPortletJspBean</code>, qui
+                    assure la création, la modification et l'affichage des deux types de portlets via une interface
+                    unique, en adaptant son comportement en fonction de l'identifiant du type de portlet.
+                </p>
+            </subsection>
+        </section>
+    </body>
+</document>
