@@ -33,15 +33,12 @@
  */
 package fr.paris.lutece.plugins.html.web.portlet;
 
+import fr.paris.lutece.plugins.html.business.HtmlPortletTemplateHome;
 import fr.paris.lutece.plugins.html.business.portlet.HtmlPortlet;
 import fr.paris.lutece.plugins.html.business.portlet.HtmlPortletHome;
-import fr.paris.lutece.plugins.html.business.portlet.IHtmlPortlet;
-import fr.paris.lutece.plugins.html.business.portlet.UntransformedHtmlPortlet;
-import fr.paris.lutece.plugins.html.business.portlet.UntransformedHtmlPortletHome;
 import fr.paris.lutece.portal.business.portlet.Portlet;
 import fr.paris.lutece.portal.business.portlet.PortletHome;
 import fr.paris.lutece.portal.service.admin.AdminUserService;
-import fr.paris.lutece.portal.service.html.HtmlCleanerService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.util.AppPathService;
@@ -68,15 +65,14 @@ public class HtmlPortletJspBean extends PortletJspBean
 
     // Parameter
     private static final String PARAMETER_CONTENT_HTML = "html_content";
+    private static final String PARAMETER_ID_TEMPLATE = "id_template";
+
+    // Marks
     private static final String MARK_WEBAPP_URL = "webapp_url";
     private static final String MARK_LOCALE = "locale";
     private static final String MARK_HTML_CONTENT = "html_content";
-    private static final String MARK_EDITOR = "editor";
-
-    private static final String PORTLET_TYPE_LEGACY_HTML = "HTML_PORTLET";
-    private static final String PORTLET_TYPE_UNTRANSFORMED_HTML = "HTML_UNTRANSFORMED_PORTLET";
-
-    private static final String MESSAGE_INVALID_PORTLET_TYPE_ERROR = "html.message.invalidPortletType";
+    private static final String MARK_ID_TEMPLATE = "id_template";
+    private static final String MARK_TEMPLATES_LIST = "templates_list";
 
     private static final long serialVersionUID = 1L;
 
@@ -103,11 +99,12 @@ public class HtmlPortletJspBean extends PortletJspBean
         String strPageId = request.getParameter( PARAMETER_PAGE_ID );
         String strPortletTypeId = request.getParameter( PARAMETER_PORTLET_TYPE_ID );
 
-        Map<String, Object> model = new HashMap<String, Object>( );
+        Map<String, Object> model = new HashMap<>( );
         model.put( MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
         model.put( MARK_LOCALE, AdminUserService.getLocale( request ).getLanguage( ) );
         model.put( MARK_HTML_CONTENT, "" );
-        model.put( MARK_EDITOR, PORTLET_TYPE_LEGACY_HTML.equals( strPortletTypeId ) );
+        model.put( MARK_ID_TEMPLATE, HtmlPortletTemplateHome.DEFAULT_TEMPLATE_ID );
+        model.put( MARK_TEMPLATES_LIST, HtmlPortletTemplateHome.getTemplatesReferenceList( ) );
 
         HtmlTemplate template = getCreateTemplate( strPageId, strPortletTypeId, model );
 
@@ -126,14 +123,14 @@ public class HtmlPortletJspBean extends PortletJspBean
     {
         String strPortletId = request.getParameter( PARAMETER_PORTLET_ID );
         int nPortletId = Integer.parseInt( strPortletId );
-        Portlet portlet = PortletHome.findByPrimaryKey( nPortletId );
-        String strPortletTypeId = portlet.getPortletTypeId( );
-        IHtmlPortlet htmlPortlet = (IHtmlPortlet) portlet;
-        Map<String, Object> model = new HashMap<String, Object>( );
+        HtmlPortlet portlet = (HtmlPortlet) PortletHome.findByPrimaryKey( nPortletId );
+
+        Map<String, Object> model = new HashMap<>( );
         model.put( MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
         model.put( MARK_LOCALE, AdminUserService.getLocale( request ).getLanguage( ) );
-        model.put( MARK_HTML_CONTENT, htmlPortlet.getHtml( ) );
-        model.put( MARK_EDITOR, PORTLET_TYPE_LEGACY_HTML.equals( strPortletTypeId ) );
+        model.put( MARK_HTML_CONTENT, portlet.getHtml( ) );
+        model.put( MARK_ID_TEMPLATE, portlet.getIdTemplate( ) );
+        model.put( MARK_TEMPLATES_LIST, HtmlPortletTemplateHome.getTemplatesReferenceList( ) );
 
         HtmlTemplate template = getModifyTemplate( portlet, model );
 
@@ -150,29 +147,7 @@ public class HtmlPortletJspBean extends PortletJspBean
     @Override
     public String doCreate( HttpServletRequest request )
     {
-        Portlet portlet;
-        PortletHome portletHome;
-        boolean bClean;
-        String strPortletTypeId = request.getParameter( PARAMETER_PORTLET_TYPE_ID );
-
-        if ( strPortletTypeId.equals( PORTLET_TYPE_LEGACY_HTML ) )
-        {
-            portlet = new HtmlPortlet( );
-            bClean = true;
-            portletHome = HtmlPortletHome.getInstance( );
-        }
-        else
-            if ( strPortletTypeId.equals( PORTLET_TYPE_UNTRANSFORMED_HTML ) )
-            {
-                portlet = new UntransformedHtmlPortlet( );
-                bClean = false;
-                portletHome = UntransformedHtmlPortletHome.getInstance( );
-            }
-            else
-            {
-                String strErrorUrl = AdminMessageService.getMessageUrl( request, MESSAGE_INVALID_PORTLET_TYPE_ERROR, AdminMessage.TYPE_STOP );
-                return strErrorUrl;
-            }
+        HtmlPortlet portlet = new HtmlPortlet( );
 
         // get portlet common attributes
         String strErrorUrl = setPortletCommonData( request, portlet );
@@ -187,8 +162,7 @@ public class HtmlPortletJspBean extends PortletJspBean
         int nPageId = Integer.parseInt( strPageId );
         portlet.setPageId( nPageId );
 
-        // Clean and Insert the content
-        strErrorUrl = doInsertContent( request, (IHtmlPortlet) portlet, bClean );
+        strErrorUrl = setPortletSpecificData( request, portlet );
 
         if ( strErrorUrl != null )
         {
@@ -196,7 +170,7 @@ public class HtmlPortletJspBean extends PortletJspBean
         }
 
         // creates the portlet
-        portletHome.create( portlet );
+        HtmlPortletHome.getInstance( ).create( portlet );
 
         // displays the page with the new portlet
         return getPageUrl( portlet.getPageId( ) );
@@ -214,7 +188,6 @@ public class HtmlPortletJspBean extends PortletJspBean
     {
         // recovers portlet attributes
         String strPortletId = request.getParameter( PARAMETER_PORTLET_ID );
-        String strPortletTypeId = request.getParameter( PARAMETER_PORTLET_TYPE_ID );
         int nPortletId = Integer.parseInt( strPortletId );
         Portlet portlet = PortletHome.findByPrimaryKey( nPortletId );
 
@@ -226,26 +199,9 @@ public class HtmlPortletJspBean extends PortletJspBean
             return strErrorUrl;
         }
 
-        boolean bClean;
-        if ( strPortletTypeId.equals( PORTLET_TYPE_LEGACY_HTML ) )
-        {
-            bClean = true;
-        }
-        else
-            if ( strPortletTypeId.equals( PORTLET_TYPE_UNTRANSFORMED_HTML ) )
-            {
-                bClean = false;
-            }
-            else
-            {
-                strErrorUrl = AdminMessageService.getMessageUrl( request, MESSAGE_INVALID_PORTLET_TYPE_ERROR, AdminMessage.TYPE_STOP );
-                return strErrorUrl;
-            }
+        HtmlPortlet htmlPortlet = (HtmlPortlet) portlet;
 
-        IHtmlPortlet htmlPortlet = (IHtmlPortlet) portlet;
-
-        // Clean and Insert the content
-        strErrorUrl = doInsertContent( request, htmlPortlet, bClean );
+        strErrorUrl = setPortletSpecificData( request, htmlPortlet );
 
         if ( strErrorUrl != null )
         {
@@ -263,33 +219,36 @@ public class HtmlPortletJspBean extends PortletJspBean
     // Private Implementation
 
     /**
-     * Do commons insert
-     * 
+     * Fill the portlet with the specific data of the form : the HTML content and the chosen template
+     *
      * @param request
-     *            The HttpServletRequest
-     * @param htmlPortlet
-     *            the HtmlPortlet
+     *            The Http request
+     * @param portlet
+     *            The portlet to fill
+     * @return an error URL if the form is invalid, null otherwise
      */
-    private String doInsertContent( HttpServletRequest request, IHtmlPortlet htmlPortlet, boolean bClean )
+    private String setPortletSpecificData( HttpServletRequest request, HtmlPortlet portlet )
     {
-        String strErrorUrl = null;
-
-        // html code cleaning
-        String strContent = request.getParameter( PARAMETER_CONTENT_HTML );
+        String strIdTemplate = request.getParameter( PARAMETER_ID_TEMPLATE );
+        int nIdTemplate;
 
         try
         {
-            if ( bClean )
-            {
-                strContent = HtmlCleanerService.clean( strContent );
-            }
-            htmlPortlet.setHtml( strContent );
+            nIdTemplate = Integer.parseInt( strIdTemplate );
         }
-        catch( Exception e )
+        catch( NumberFormatException e )
         {
-            strErrorUrl = AdminMessageService.getMessageUrl( request, Messages.HTML_CLEANER_ERROR, AdminMessage.TYPE_STOP );
+            return AdminMessageService.getMessageUrl( request, Messages.MANDATORY_FIELDS, AdminMessage.TYPE_STOP );
         }
 
-        return strErrorUrl;
+        if ( HtmlPortletTemplateHome.findByPrimaryKey( nIdTemplate ) == null )
+        {
+            return AdminMessageService.getMessageUrl( request, Messages.MANDATORY_FIELDS, AdminMessage.TYPE_STOP );
+        }
+
+        portlet.setIdTemplate( nIdTemplate );
+        portlet.setHtml( request.getParameter( PARAMETER_CONTENT_HTML ) );
+
+        return null;
     }
 }

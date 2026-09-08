@@ -31,46 +31,61 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.html.business.portlet;
+package fr.paris.lutece.plugins.html.business;
+
+import java.util.List;
 
 /**
- * IHtmlPortlet
+ * Interface for HtmlPortletTemplate DAO
  */
-public interface IHtmlPortlet
+public interface IHtmlPortletTemplateDAO
 {
     /**
-     * Set the portlet ID
-     * 
-     * @param nId
-     *            the portlet ID
-     */
-    void setId( int nId );
-
-    /**
-     * Get the portlet ID
-     * 
-     * @return the portlet ID
-     */
-    int getId( );
-
-    /**
-     * Sets the Html portlet content
+     * Insert a new template in the table
      *
-     * @param strHtml
-     *            the Html code to sets content
+     * @param template
+     *            The template to insert. Its identifier is set by this method.
      */
-    void setHtml( String strHtml );
+    void insert( HtmlPortletTemplate template );
 
     /**
-     * Returns the content of the Html portlet
+     * Update the template in the table
      *
-     * @return the Html code content
+     * @param template
+     *            The template to update
      */
-    String getHtml( );
+    void store( HtmlPortletTemplate template );
 
     /**
-     * Update the portlet
+     * Delete a template from the table
+     *
+     * @param nIdTemplate
+     *            The identifier of the template to delete
      */
-    void update( );
+    void delete( int nIdTemplate );
 
+    /**
+     * Load the data of a template from the table
+     *
+     * @param nIdTemplate
+     *            The identifier of the template
+     * @return The instance of the template, or null if not found
+     */
+    HtmlPortletTemplate load( int nIdTemplate );
+
+    /**
+     * Returns the list of all the templates
+     *
+     * @return A list of HtmlPortletTemplate objects
+     */
+    List<HtmlPortletTemplate> selectTemplatesList( );
+
+    /**
+     * Checks whether a template is used by at least one HTML portlet
+     *
+     * @param nIdTemplate
+     *            The identifier of the template
+     * @return true if the template is used by a portlet, false otherwise
+     */
+    boolean checkTemplateIsUsed( int nIdTemplate );
 }

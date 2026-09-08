@@ -2,6 +2,15 @@
 -- changeset html:init_db_html.sql
 -- preconditions onFail:MARK_RAN onError:WARN
 --
+-- Dumping data for table html_portlet_template
+--
+
+INSERT INTO html_portlet_template (id_template, description, template_path) VALUES (1, 'Défaut', 'skin/plugins/html/portlet_html.html');
+INSERT INTO html_portlet_template (id_template, description, template_path) VALUES (2, 'Fond coloré', 'skin/plugins/html/portlet_html_background.html');
+INSERT INTO html_portlet_template (id_template, description, template_path) VALUES (3, 'Encadré', 'skin/plugins/html/portlet_html_bordered.html');
+INSERT INTO html_portlet_template (id_template, description, template_path) VALUES (4, 'Brut (sans habillage)', 'skin/plugins/html/portlet_html_raw.html');
+
+--
 -- Dumping data for table html_portlet
 --
 

@@ -1,0 +1,33 @@
+<@pageContainer>
+    <@pageColumn>
+        <@pageHeader title='#i18n{html.manage_html_portlet_templates.pageTitle}'>
+            <@offcanvas targetUrl="jsp/admin/plugins/html/CreateHtmlPortletTemplate.jsp" targetElement="#create-html-portlet-template-form" redirectForm=false id="create-html-portlet-template" title="#i18n{html.create_html_portlet_template.boxTitle}" btnTitle="#i18n{html.manage_html_portlet_templates.buttonLabelCreate}" btnIcon="plus" hideTitle=['xs','sm'] position="end" />
+        </@pageHeader>
+        <#if templates_list?size gt 0>
+        <@manageFeature>
+            <#list templates_list as template>
+                <@manageFeatureItem>
+                    <@manageFeatureItemColumn>
+                        <@p class='mb-0'>#i18n{html.manage_html_portlet_templates.columnTitleDescription} : <strong>${template.description!}</strong></@p>
+                    </@manageFeatureItemColumn>
+                    <@manageFeatureItemColumn>
+                        <@p class='mb-0'>#i18n{html.manage_html_portlet_templates.columnTitleTemplatePath} : <code>${template.templatePath!}</code></@p>
+                    </@manageFeatureItemColumn>
+                    <@manageFeatureItemColumn auto=true>
+                        <#if permissions_modify[template.id?string]!false>
+                        <@offcanvas targetUrl="jsp/admin/plugins/html/ModifyHtmlPortletTemplate.jsp?template_id=${template.id}" targetElement="#modify-html-portlet-template-form" redirectForm=false id="modify-html-portlet-template-${template.id}" title="#i18n{portal.util.labelModify} ${template.description!?html}" btnTitle="#i18n{portal.util.labelModify}" btnIcon="edit me-1" hideTitle=['xs'] position="end" />
+                        </#if>
+                        <#if permissions_delete[template.id?string]!false>
+                        <@aButton href='jsp/admin/plugins/html/RemoveHtmlPortletTemplate.jsp?template_id=${template.id}' buttonIcon='trash me-1' size='' title='#i18n{portal.util.labelDelete}' hideTitle=['xs'] color='danger' />
+                        </#if>
+                    </@manageFeatureItemColumn>
+                </@manageFeatureItem>
+            </#list>
+        </@manageFeature>
+        <#else>
+            <@box>
+                <@empty title='#i18n{html.manage_html_portlet_templates.noTemplate}' subtitle=' ' iconName='template-off' />
+            </@box>
+        </#if>
+    </@pageColumn>
+</@pageContainer>

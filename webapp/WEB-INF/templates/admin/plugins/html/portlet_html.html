@@ -1,4 +1,15 @@
 <#include "/admin/util/editor/editor.html" />
-<@formLabel class='form-label h3' labelFor='html_content'>#i18n{html.create_portlet_html.labelHtmlContent}</@formLabel>
-<@input type='textarea' id='html_content' name='html_content' class='richtext' rows=12 richtext=true>${html_content}</@input>
+<@row>
+    <@columns sm=10 md=6 lg=3>
+		<@formGroup labelFor='id_template' labelKey='#i18n{html.create_portlet_html.labelTemplate}' rows=2>
+			<@select id='id_template' name='id_template' items=templates_list default_value='${id_template}' />
+		</@formGroup>
+	</@columns>
+</@row>
+<@row>
+	<@columns>
+		<@formLabel class='form-label h3' labelFor='html_content'>#i18n{html.create_portlet_html.labelHtmlContent}</@formLabel>
+		<@input type='textarea' id='html_content' name='html_content' class='richtext' rows=12 richtext=true>${html_content}</@input>
+	</@columns>
+</@row>
 <@initEditor  />
