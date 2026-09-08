@@ -34,14 +34,82 @@
 package fr.paris.lutece.plugins.html.business.portlet;
 
 import fr.paris.lutece.portal.business.portlet.Portlet;
+import fr.paris.lutece.util.sql.DAOUtil;
+
 import jakarta.enterprise.context.ApplicationScoped;
 
 /**
  * this class provides Data Access methods for HtmlPortlet objects
  */
 @ApplicationScoped
-public class HtmlPortletDAO extends BaseHtmlPortletDAO
+public class HtmlPortletDAO implements IHtmlPortletDAO
 {
+    // Constants
+    private static final String SQL_QUERY_SELECT = "SELECT id_portlet, html, id_template FROM html_portlet WHERE id_portlet = ? ";
+    private static final String SQL_QUERY_INSERT = "INSERT INTO html_portlet ( id_portlet, html, id_template ) VALUES ( ?, ?, ? )";
+    private static final String SQL_QUERY_DELETE = "DELETE FROM html_portlet WHERE id_portlet = ? ";
+    private static final String SQL_QUERY_UPDATE = "UPDATE html_portlet SET id_portlet = ?, html = ?, id_template = ? WHERE id_portlet = ? ";
+
+    // /////////////////////////////////////////////////////////////////////////////////////
+    // Access methods to data
+
+    /**
+     * Insert a new record in the table.
+     *
+     * @param portlet
+     *            The Instance of the Portlet
+     */
+    @Override
+    public void insert( Portlet portlet )
+    {
+        HtmlPortlet p = (HtmlPortlet) portlet;
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT ) )
+        {
+            daoUtil.setInt( 1, p.getId( ) );
+            daoUtil.setString( 2, p.getHtml( ) );
+            daoUtil.setInt( 3, p.getIdTemplate( ) );
+
+            daoUtil.executeUpdate( );
+        }
+    }
+
+    /**
+     * Delete record from table
+     *
+     * @param nPortletId
+     *            The indentifier of the Portlet
+     */
+    @Override
+    public void delete( int nPortletId )
+    {
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE ) )
+        {
+            daoUtil.setInt( 1, nPortletId );
+
+            daoUtil.executeUpdate( );
+        }
+    }
+
+    /**
+     * Update the record in the table
+     *
+     * @param portlet
+     *            The reference of the portlet
+     */
+    @Override
+    public void store( Portlet portlet )
+    {
+        HtmlPortlet p = (HtmlPortlet) portlet;
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE ) )
+        {
+            daoUtil.setInt( 1, p.getId( ) );
+            daoUtil.setString( 2, p.getHtml( ) );
+            daoUtil.setInt( 3, p.getIdTemplate( ) );
+            daoUtil.setInt( 4, p.getId( ) );
+
+            daoUtil.executeUpdate( );
+        }
+    }
 
     /**
      * load the data of the portlet from the table
@@ -53,7 +121,21 @@ public class HtmlPortletDAO extends BaseHtmlPortletDAO
     @Override
     public Portlet load( int nIdPortlet )
     {
-        return load( nIdPortlet, new HtmlPortlet( ) );
-    }
+        HtmlPortlet portlet = new HtmlPortlet( );
 
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT ) )
+        {
+            daoUtil.setInt( 1, nIdPortlet );
+            daoUtil.executeQuery( );
+
+            if ( daoUtil.next( ) )
+            {
+                portlet.setId( daoUtil.getInt( 1 ) );
+                portlet.setHtml( daoUtil.getString( 2 ) );
+                portlet.setIdTemplate( daoUtil.getInt( 3 ) );
+            }
+        }
+
+        return portlet;
+    }
 }

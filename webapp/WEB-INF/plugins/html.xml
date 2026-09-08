@@ -19,27 +19,32 @@
     </core-version-dependency>
     <db-pool-required>0</db-pool-required>
 
+    <!-- Administration interface parameters -->
+    <admin-features>
+        <admin-feature>
+            <feature-id>HTML_PORTLET_TEMPLATE_MANAGEMENT</feature-id>
+            <feature-title>html.adminFeature.html_portlet_template_management.name</feature-title>
+            <feature-description>html.adminFeature.html_portlet_template_management.description</feature-description>
+            <feature-level>0</feature-level>
+            <feature-url>jsp/admin/plugins/html/ManageHtmlPortletTemplates.jsp</feature-url>
+            <feature-group>STYLE</feature-group>
+            <feature-icon-url>ti ti-template</feature-icon-url>
+        </admin-feature>
+    </admin-features>
+
+    <!-- RBAC Resources -->
+    <rbac-resource-types>
+        <rbac-resource-type>
+            <rbac-resource-type-class>fr.paris.lutece.plugins.html.service.HtmlPortletTemplateResourceIdService</rbac-resource-type-class>
+        </rbac-resource-type>
+    </rbac-resource-types>
+
     <!-- Portlet parameters -->
     <portlets>
         <portlet>
             <portlet-class>fr.paris.lutece.plugins.html.business.portlet.HtmlPortletHome</portlet-class>
             <portlet-type-id>HTML_PORTLET</portlet-type-id>
             <portlet-type-name>html.portlet.name</portlet-type-name>
-            <portlet-creation-url>plugins/html/CreatePortletHtml.jsp</portlet-creation-url>
-            <portlet-update-url>plugins/html/ModifyPortletHtml.jsp</portlet-update-url>
-            <portlet-create-action-url>plugins/html/DoCreatePortletHtml.jsp</portlet-create-action-url>
-            <portlet-modify-action-url>plugins/html/DoModifyPortletHtml.jsp</portlet-modify-action-url>
-            <portlet-create-script-template>/admin/portlet/script_create_portlet.html</portlet-create-script-template>
-            <portlet-modify-script-template>/admin/portlet/script_modify_portlet.html</portlet-modify-script-template>
-            <portlet-create-specific-template>/admin/plugins/html/portlet_html.html</portlet-create-specific-template>
-            <portlet-modify-specific-template>/admin/plugins/html/portlet_html.html</portlet-modify-specific-template>
-            <portlet-create-specific-form-template/>
-            <portlet-modify-specific-form-template/>
-        </portlet>
-        <portlet>
-            <portlet-class>fr.paris.lutece.plugins.html.business.portlet.UntransformedHtmlPortletHome</portlet-class>
-            <portlet-type-id>HTML_UNTRANSFORMED_PORTLET</portlet-type-id>
-            <portlet-type-name>html.portlet.untransformed.name</portlet-type-name>
             <portlet-creation-url>plugins/html/CreatePortletHtml.jsp</portlet-creation-url>
             <portlet-update-url>plugins/html/ModifyPortletHtml.jsp</portlet-update-url>
             <portlet-create-action-url>plugins/html/DoCreatePortletHtml.jsp</portlet-create-action-url>

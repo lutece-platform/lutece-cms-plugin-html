@@ -1,0 +1,22 @@
+<@row>
+    <@columns>
+        <@box color='info'>
+            <@boxHeader title='#i18n{html.create_html_portlet_template.boxTitle}' />
+            <@boxBody>
+                <@tform method='post' id="create-html-portlet-template-form" action='jsp/admin/plugins/html/DoCreateHtmlPortletTemplate.jsp' name='create_html_portlet_template'>
+                    <@input type='hidden' name='token' value='${token}' />
+                    <@formGroup labelKey='#i18n{html.create_html_portlet_template.labelDescription}' labelFor='template_description' mandatory=true>
+                        <@input type='text' name='template_description' id='template_description' value='' maxlength=255 mandatory=true />
+                    </@formGroup>
+                    <@formGroup labelKey='#i18n{html.create_html_portlet_template.labelTemplatePath}' labelFor='template_path' helpKey='#i18n{html.create_html_portlet_template.helpTemplatePath}' mandatory=true>
+                        <@input type='text' name='template_path' id='template_path' value='' placeHolder='skin/plugins/html/portlet_html.html' maxlength=255 mandatory=true />
+                    </@formGroup>
+                    <@formGroup>
+                        <@button type='submit' buttonIcon='check' title='#i18n{portal.util.labelValidate}' size='' />
+                        <@aButton href='jsp/admin/plugins/html/ManageHtmlPortletTemplates.jsp' buttonIcon='times' title='#i18n{portal.util.labelCancel}' size='' color='danger' />
+                    </@formGroup>
+                </@tform>
+            </@boxBody>
+        </@box>
+    </@columns>
+</@row>
