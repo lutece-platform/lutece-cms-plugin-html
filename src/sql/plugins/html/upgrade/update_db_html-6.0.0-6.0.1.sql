@@ -43,9 +43,10 @@ UPDATE core_portlet SET id_style = 0 WHERE id_portlet_type = 'HTML_PORTLET';
 
 DELETE FROM core_portlet_type WHERE id_portlet_type = 'HTML_UNTRANSFORMED_PORTLET';
 
---
--- Remove the XSL styles and stylesheets of the HTML portlet
---
+-- changeset html:update_db_html-6.0.0-6.0.1.sql-rev1.sql
+-- preconditions onFail:MARK_RAN onError:WARN
+-- comment Legacy XSL style tables left the core for plugin-xmltransformer and are absent from many databases: skip instead of failing the whole update
+-- precondition-sql-check expectedResult:3 SELECT COUNT(1) from INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=database() AND TABLE_NAME IN ('core_style_mode_stylesheet','core_stylesheet','core_style');
 DELETE FROM core_style_mode_stylesheet WHERE id_style IN (100, 101);
 DELETE FROM core_style WHERE id_style IN (100, 101);
 DELETE FROM core_stylesheet WHERE id_stylesheet IN (10, 285);
