@@ -33,16 +33,12 @@
  */
 package fr.paris.lutece.plugins.html.web.portlet;
 
-import fr.paris.lutece.plugins.html.business.HtmlPortletTemplateHome;
 import fr.paris.lutece.plugins.html.business.portlet.HtmlPortlet;
 import fr.paris.lutece.plugins.html.business.portlet.HtmlPortletHome;
 import fr.paris.lutece.portal.business.portlet.Portlet;
 import fr.paris.lutece.portal.business.portlet.PortletHome;
 import fr.paris.lutece.portal.service.admin.AdminUserService;
-import fr.paris.lutece.portal.service.message.AdminMessage;
-import fr.paris.lutece.portal.service.message.AdminMessageService;
 import fr.paris.lutece.portal.service.util.AppPathService;
-import fr.paris.lutece.portal.web.constants.Messages;
 import fr.paris.lutece.portal.web.portlet.PortletJspBean;
 import fr.paris.lutece.util.html.HtmlTemplate;
 
@@ -65,14 +61,11 @@ public class HtmlPortletJspBean extends PortletJspBean
 
     // Parameter
     private static final String PARAMETER_CONTENT_HTML = "html_content";
-    private static final String PARAMETER_ID_TEMPLATE = "id_template";
 
     // Marks
     private static final String MARK_WEBAPP_URL = "webapp_url";
     private static final String MARK_LOCALE = "locale";
     private static final String MARK_HTML_CONTENT = "html_content";
-    private static final String MARK_ID_TEMPLATE = "id_template";
-    private static final String MARK_TEMPLATES_LIST = "templates_list";
 
     private static final long serialVersionUID = 1L;
 
@@ -103,8 +96,6 @@ public class HtmlPortletJspBean extends PortletJspBean
         model.put( MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
         model.put( MARK_LOCALE, AdminUserService.getLocale( request ).getLanguage( ) );
         model.put( MARK_HTML_CONTENT, "" );
-        model.put( MARK_ID_TEMPLATE, HtmlPortletTemplateHome.DEFAULT_TEMPLATE_ID );
-        model.put( MARK_TEMPLATES_LIST, HtmlPortletTemplateHome.getTemplatesReferenceList( ) );
 
         HtmlTemplate template = getCreateTemplate( strPageId, strPortletTypeId, model );
 
@@ -129,8 +120,6 @@ public class HtmlPortletJspBean extends PortletJspBean
         model.put( MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
         model.put( MARK_LOCALE, AdminUserService.getLocale( request ).getLanguage( ) );
         model.put( MARK_HTML_CONTENT, portlet.getHtml( ) );
-        model.put( MARK_ID_TEMPLATE, portlet.getIdTemplate( ) );
-        model.put( MARK_TEMPLATES_LIST, HtmlPortletTemplateHome.getTemplatesReferenceList( ) );
 
         HtmlTemplate template = getModifyTemplate( portlet, model );
 
@@ -219,34 +208,16 @@ public class HtmlPortletJspBean extends PortletJspBean
     // Private Implementation
 
     /**
-     * Fill the portlet with the specific data of the form : the HTML content and the chosen template
+     * Sets the HTML content of the portlet from the request. The template is a common portlet attribute, handled by the core.
      *
      * @param request
-     *            The Http request
+     *            the HTTP request
      * @param portlet
-     *            The portlet to fill
-     * @return an error URL if the form is invalid, null otherwise
+     *            the portlet
+     * @return null : no error can occur
      */
     private String setPortletSpecificData( HttpServletRequest request, HtmlPortlet portlet )
     {
-        String strIdTemplate = request.getParameter( PARAMETER_ID_TEMPLATE );
-        int nIdTemplate;
-
-        try
-        {
-            nIdTemplate = Integer.parseInt( strIdTemplate );
-        }
-        catch( NumberFormatException e )
-        {
-            return AdminMessageService.getMessageUrl( request, Messages.MANDATORY_FIELDS, AdminMessage.TYPE_STOP );
-        }
-
-        if ( HtmlPortletTemplateHome.findByPrimaryKey( nIdTemplate ) == null )
-        {
-            return AdminMessageService.getMessageUrl( request, Messages.MANDATORY_FIELDS, AdminMessage.TYPE_STOP );
-        }
-
-        portlet.setIdTemplate( nIdTemplate );
         portlet.setHtml( request.getParameter( PARAMETER_CONTENT_HTML ) );
 
         return null;

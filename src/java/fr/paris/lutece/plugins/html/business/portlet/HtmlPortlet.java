@@ -33,19 +33,15 @@
  */
 package fr.paris.lutece.plugins.html.business.portlet;
 
-import fr.paris.lutece.plugins.html.business.HtmlPortletTemplate;
-import fr.paris.lutece.plugins.html.business.HtmlPortletTemplateHome;
 import fr.paris.lutece.portal.business.portlet.PortletHtmlContent;
-import fr.paris.lutece.portal.service.template.AppTemplateService;
-import fr.paris.lutece.util.html.HtmlTemplate;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 /**
- * This class represents business objects HtmlPortlet. The content is rendered with the FreeMarker template chosen for the portlet.
+ * This class represents business objects HtmlPortlet. The content is rendered with the FreeMarker template chosen for the portlet among the templates
+ * registered for the HTML portlet type in the core (Section Template Management feature).
  */
 public class HtmlPortlet extends PortletHtmlContent
 {
@@ -54,13 +50,9 @@ public class HtmlPortlet extends PortletHtmlContent
     private static final String TEMPLATE_PORTLET_HTML_DEFAULT = "skin/plugins/html/portlet_html.html";
 
     // Marks
-    private static final String MARK_PORTLET = "portlet";
-    private static final String MARK_PORTLET_ID = "portlet_id";
-    private static final String MARK_PORTLET_NAME = "portlet_name";
     private static final String MARK_HTML_CONTENT = "html_content";
 
     private String _strHtml;
-    private int _nIdTemplate = HtmlPortletTemplateHome.DEFAULT_TEMPLATE_ID;
 
     /**
      * Sets the identifier of the portlet type to value specified
@@ -71,10 +63,10 @@ public class HtmlPortlet extends PortletHtmlContent
     }
 
     /**
-     * Sets the Html portlet content
+     * Sets the HTML content of the portlet
      *
      * @param strHtml
-     *            the Html code to sets content
+     *            the HTML content
      */
     public void setHtml( String strHtml )
     {
@@ -82,9 +74,9 @@ public class HtmlPortlet extends PortletHtmlContent
     }
 
     /**
-     * Returns the content of the Html portlet
+     * Returns the HTML content of the portlet
      *
-     * @return the Html code content
+     * @return the HTML content
      */
     public String getHtml( )
     {
@@ -92,62 +84,15 @@ public class HtmlPortlet extends PortletHtmlContent
     }
 
     /**
-     * Sets the identifier of the FreeMarker template used to render the portlet
-     *
-     * @param nIdTemplate
-     *            the template identifier
-     */
-    public void setIdTemplate( int nIdTemplate )
-    {
-        _nIdTemplate = nIdTemplate;
-    }
-
-    /**
-     * Returns the identifier of the FreeMarker template used to render the portlet
-     *
-     * @return the template identifier
-     */
-    public int getIdTemplate( )
-    {
-        return _nIdTemplate;
-    }
-
-    /**
-     * {@inheritDoc }
+     * {@inheritDoc}
      */
     @Override
     public String getHtmlContent( HttpServletRequest request )
     {
-        Map<String, Object> model = new HashMap<>( );
-        model.put( MARK_PORTLET, this );
-        model.put( MARK_PORTLET_ID, getId( ) );
+        Map<String, Object> model = createPortletModel( );
         model.put( MARK_HTML_CONTENT, _strHtml );
 
-        if ( getDisplayPortletTitle( ) == 0 )
-        {
-            model.put( MARK_PORTLET_NAME, getName( ) );
-        }
-
-        HtmlTemplate template = AppTemplateService.getTemplate( getTemplatePath( ), getLocale( request ), model );
-
-        return template.getHtml( );
-    }
-
-    /**
-     * Returns the path of the FreeMarker template chosen for this portlet, or the default one if the chosen template does not exist anymore
-     *
-     * @return the template path
-     */
-    private String getTemplatePath( )
-    {
-        HtmlPortletTemplate portletTemplate = HtmlPortletTemplateHome.findByPrimaryKey( _nIdTemplate );
-
-        if ( portletTemplate == null || portletTemplate.getTemplatePath( ) == null || portletTemplate.getTemplatePath( ).isEmpty( ) )
-        {
-            return TEMPLATE_PORTLET_HTML_DEFAULT;
-        }
-
-        return portletTemplate.getTemplatePath( );
+        return renderTemplate( request, TEMPLATE_PORTLET_HTML_DEFAULT, model );
     }
 
     /**
