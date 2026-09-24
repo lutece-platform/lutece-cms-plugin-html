@@ -45,10 +45,10 @@ import jakarta.enterprise.context.ApplicationScoped;
 public class HtmlPortletDAO implements IHtmlPortletDAO
 {
     // Constants
-    private static final String SQL_QUERY_SELECT = "SELECT id_portlet, html, id_template FROM html_portlet WHERE id_portlet = ? ";
-    private static final String SQL_QUERY_INSERT = "INSERT INTO html_portlet ( id_portlet, html, id_template ) VALUES ( ?, ?, ? )";
+    private static final String SQL_QUERY_SELECT = "SELECT id_portlet, html FROM html_portlet WHERE id_portlet = ? ";
+    private static final String SQL_QUERY_INSERT = "INSERT INTO html_portlet ( id_portlet, html ) VALUES ( ?, ? )";
     private static final String SQL_QUERY_DELETE = "DELETE FROM html_portlet WHERE id_portlet = ? ";
-    private static final String SQL_QUERY_UPDATE = "UPDATE html_portlet SET id_portlet = ?, html = ?, id_template = ? WHERE id_portlet = ? ";
+    private static final String SQL_QUERY_UPDATE = "UPDATE html_portlet SET id_portlet = ?, html = ? WHERE id_portlet = ? ";
 
     // /////////////////////////////////////////////////////////////////////////////////////
     // Access methods to data
@@ -67,7 +67,6 @@ public class HtmlPortletDAO implements IHtmlPortletDAO
         {
             daoUtil.setInt( 1, p.getId( ) );
             daoUtil.setString( 2, p.getHtml( ) );
-            daoUtil.setInt( 3, p.getIdTemplate( ) );
 
             daoUtil.executeUpdate( );
         }
@@ -104,8 +103,7 @@ public class HtmlPortletDAO implements IHtmlPortletDAO
         {
             daoUtil.setInt( 1, p.getId( ) );
             daoUtil.setString( 2, p.getHtml( ) );
-            daoUtil.setInt( 3, p.getIdTemplate( ) );
-            daoUtil.setInt( 4, p.getId( ) );
+            daoUtil.setInt( 3, p.getId( ) );
 
             daoUtil.executeUpdate( );
         }
@@ -132,7 +130,6 @@ public class HtmlPortletDAO implements IHtmlPortletDAO
             {
                 portlet.setId( daoUtil.getInt( 1 ) );
                 portlet.setHtml( daoUtil.getString( 2 ) );
-                portlet.setIdTemplate( daoUtil.getInt( 3 ) );
             }
         }
 

@@ -44,7 +44,7 @@ import jakarta.enterprise.inject.spi.CDI;
 public final class HtmlPortletHome extends PortletHome
 {
     // Static variable pointed at the DAO instance
-    private static IHtmlPortletDAO _dao = CDI.current( ).select( HtmlPortletDAO.class ).get( );
+    private static IHtmlPortletDAO _dao = CDI.current( ).select( IHtmlPortletDAO.class ).get( );
 
     /* This class implements the Singleton design pattern. */
     private static HtmlPortletHome _singleton = null;

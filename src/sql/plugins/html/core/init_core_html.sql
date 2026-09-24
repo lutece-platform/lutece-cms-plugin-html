@@ -17,3 +17,21 @@ INSERT INTO core_admin_right (id_right,name,level_right,admin_url,description,is
 -- Dumping data for table core_user_right
 --
 INSERT INTO core_user_right (id_right,id_user) VALUES ('HTML_PORTLET_TEMPLATE_MANAGEMENT',1);
+
+--
+-- The FreeMarker templates of the HTML portlets are now registered in the core (core_portlet_template, Section Template Management feature).
+-- The plugin's own template management feature is removed.
+--
+-- changeset html:init_core_html.sql-rev1.sql
+-- preconditions onFail:MARK_RAN onError:WARN
+-- precondition-sql-check expectedResult:0 SELECT COUNT(*) FROM core_portlet_template WHERE id_portlet_type = 'HTML_PORTLET'
+INSERT INTO core_portlet_template (id_portlet_type, description, template_path) VALUES ('HTML_PORTLET', 'Défaut', 'skin/plugins/html/portlet_html.html');
+INSERT INTO core_portlet_template (id_portlet_type, description, template_path) VALUES ('HTML_PORTLET', 'Fond coloré', 'skin/plugins/html/portlet_html_background.html');
+INSERT INTO core_portlet_template (id_portlet_type, description, template_path) VALUES ('HTML_PORTLET', 'Encadré', 'skin/plugins/html/portlet_html_bordered.html');
+INSERT INTO core_portlet_template (id_portlet_type, description, template_path) VALUES ('HTML_PORTLET', 'Brut (sans habillage)', 'skin/plugins/html/portlet_html_raw.html');
+
+-- changeset html:init_core_html.sql-rev2.sql
+-- preconditions onFail:MARK_RAN onError:WARN
+DELETE FROM core_user_right WHERE id_right = 'HTML_PORTLET_TEMPLATE_MANAGEMENT';
+DELETE FROM core_admin_right WHERE id_right = 'HTML_PORTLET_TEMPLATE_MANAGEMENT';
+DELETE FROM core_admin_role_resource WHERE resource_type = 'HTML_PORTLET_TEMPLATE';
