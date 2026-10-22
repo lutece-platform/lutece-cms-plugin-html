@@ -38,6 +38,9 @@ import fr.paris.lutece.plugins.html.business.portlet.HtmlPortletHome;
 import fr.paris.lutece.portal.business.portlet.Portlet;
 import fr.paris.lutece.portal.business.portlet.PortletHome;
 import fr.paris.lutece.portal.service.admin.AdminUserService;
+import fr.paris.lutece.portal.service.message.AdminMessage;
+import fr.paris.lutece.portal.service.message.AdminMessageService;
+import fr.paris.lutece.portal.service.security.SecurityTokenService;
 import fr.paris.lutece.portal.service.util.AppPathService;
 import fr.paris.lutece.portal.web.portlet.PortletJspBean;
 import fr.paris.lutece.util.html.HtmlTemplate;
@@ -66,6 +69,13 @@ public class HtmlPortletJspBean extends PortletJspBean
     private static final String MARK_WEBAPP_URL = "webapp_url";
     private static final String MARK_LOCALE = "locale";
     private static final String MARK_HTML_CONTENT = "html_content";
+
+    // Actions
+    private static final String ACTION_CREATE_PORTLET = "html.createPortlet";
+    private static final String ACTION_MODIFY_PORTLET = "html.modifyPortlet";
+
+    // Messages
+    private static final String MESSAGE_INVALID_TOKEN = "html.message.invalidToken";
 
     private static final long serialVersionUID = 1L;
 
@@ -96,6 +106,7 @@ public class HtmlPortletJspBean extends PortletJspBean
         model.put( MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
         model.put( MARK_LOCALE, AdminUserService.getLocale( request ).getLanguage( ) );
         model.put( MARK_HTML_CONTENT, "" );
+        model.put( SecurityTokenService.MARK_TOKEN, getSecurityTokenService( ).getToken( request, ACTION_CREATE_PORTLET ) );
 
         HtmlTemplate template = getCreateTemplate( strPageId, strPortletTypeId, model );
 
@@ -120,6 +131,7 @@ public class HtmlPortletJspBean extends PortletJspBean
         model.put( MARK_WEBAPP_URL, AppPathService.getBaseUrl( request ) );
         model.put( MARK_LOCALE, AdminUserService.getLocale( request ).getLanguage( ) );
         model.put( MARK_HTML_CONTENT, portlet.getHtml( ) );
+        model.put( SecurityTokenService.MARK_TOKEN, getSecurityTokenService( ).getToken( request, ACTION_MODIFY_PORTLET ) );
 
         HtmlTemplate template = getModifyTemplate( portlet, model );
 
@@ -156,6 +168,11 @@ public class HtmlPortletJspBean extends PortletJspBean
         if ( strErrorUrl != null )
         {
             return strErrorUrl;
+        }
+
+        if ( !getSecurityTokenService( ).validate( request, ACTION_CREATE_PORTLET ) )
+        {
+            return AdminMessageService.getMessageUrl( request, MESSAGE_INVALID_TOKEN, AdminMessage.TYPE_STOP );
         }
 
         // creates the portlet
@@ -195,6 +212,11 @@ public class HtmlPortletJspBean extends PortletJspBean
         if ( strErrorUrl != null )
         {
             return strErrorUrl;
+        }
+
+        if ( !getSecurityTokenService( ).validate( request, ACTION_MODIFY_PORTLET ) )
+        {
+            return AdminMessageService.getMessageUrl( request, MESSAGE_INVALID_TOKEN, AdminMessage.TYPE_STOP );
         }
 
         // updates the portlet
