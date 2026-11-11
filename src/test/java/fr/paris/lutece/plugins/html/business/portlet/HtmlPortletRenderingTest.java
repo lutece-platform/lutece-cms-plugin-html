@@ -63,6 +63,10 @@ public class HtmlPortletRenderingTest extends LuteceTestCase
     private static final String MARKER_PORTLET = "portlet-html";
     private static final String TEMPLATE_RAW = "skin/plugins/html/portlet_html_raw.html";
     private static final int UNKNOWN_TEMPLATE_ID = 99999;
+    private static final String RICH_CONTENT_KEPT = "<h2>Horaires</h2><ul><li>Lundi</li></ul><p><strong>Accueil</strong> &amp; <em>information</em></p>";
+    private static final String RICH_CONTENT = RICH_CONTENT_KEPT + "<script>alert(1)</script><p onclick=\"alert(2)\">Contact</p>";
+    private static final String TITLE_WITH_MARKUP = "Horaires <b>\"l'accueil\"</b>";
+    private static final String TITLE_ESCAPED = "Horaires &lt;b&gt;&quot;l&#39;accueil&quot;&lt;/b&gt;";
 
     private HtmlPortlet _portlet;
 
@@ -153,5 +157,36 @@ public class HtmlPortletRenderingTest extends LuteceTestCase
         assertTrue( strContent.contains( MARKER_PORTLET ), "the default template should render the portlet wrapper" );
         assertTrue( strContent.contains( HTML_CONTENT ), "the default template should render the HTML content" );
         assertFalse( strContent.contains( PORTLET_NAME ), "a hidden portlet title should not be rendered" );
+    }
+
+    /**
+     * Every shipped template writes the content, rich text typed by an administrator, through richText() under HTML auto-escaping (LUT-33153): its
+     * formatting is kept, its scripts and event handlers are removed by the sanitizer of the core, and the title is written as text.
+     */
+    @Test
+    public void testRenderKeepsTheRichContentAndRemovesItsScripts( )
+    {
+        MockHttpServletRequest request = new MockHttpServletRequest( );
+        LocalVariables.setLocal( null, request, new MockHttpServletResponse( ) );
+        _portlet.setHtml( RICH_CONTENT );
+        _portlet.setName( TITLE_WITH_MARKUP );
+
+        for ( PortletTemplate template : PortletTemplateHome.findByPortletType( HtmlPortletHome.getInstance( ).getPortletTypeId( ) ) )
+        {
+            _portlet.setIdTemplate( template.getId( ) );
+            String strContent = _portlet.getHtmlContent( request );
+            String strMessage = template.getTemplatePath( ) + " : " + strContent;
+
+            assertTrue( strContent.contains( RICH_CONTENT_KEPT ), strMessage );
+            assertTrue( strContent.contains( "<p>Contact</p>" ), strMessage );
+            assertFalse( strContent.contains( "<script" ), strMessage );
+            assertFalse( strContent.contains( "alert(" ), strMessage );
+            assertFalse( strContent.contains( "onclick" ), strMessage );
+
+            if ( !TEMPLATE_RAW.equals( template.getTemplatePath( ) ) )
+            {
+                assertTrue( strContent.contains( TITLE_ESCAPED ), strMessage );
+            }
+        }
     }
 }
